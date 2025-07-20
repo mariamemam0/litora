@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,11 @@ Route::middleware('auth:sanctum')->group(function (){
         $request->fulfill();
         return response()->json(['message' => 'Email verified successfully'], 200);
     })->name('verification.verify')->middleware(['signed']);
+
+
+    Route::get('/home',[HomeController::class,'index']);
 });
+
+
 
 
