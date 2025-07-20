@@ -14,7 +14,9 @@ class AuthController extends Controller
         $validate = $request->validate([
             'name'=> 'string|required|max:255',
             'email'=>'required|string|email|max:255|unique:users',
-            'password'=> 'required|string|min:8',
+            'region'=> 'nullable|string|max:255',
+            'city'=> 'nullable|string|max:255',
+            'password'=> 'required|string|min:8|confirmed',
 
         ]);
 
@@ -22,6 +24,8 @@ class AuthController extends Controller
 
             'name'=>$validate['name'],
             'email'=>$validate['email'],
+            'region'=>$validate['region'],
+            'city'=>$validate['city'],
             'password'=>bcrypt($validate['password']),
         ]);
 
@@ -47,7 +51,7 @@ public function login(Request $request)
 
         return response()->json([
             'message'=> 'Login successful',
-            'user' => $user,
+            'user' => $user->only(['name']),
             'token' => $token,
         ]);
 
